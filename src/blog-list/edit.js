@@ -22,7 +22,7 @@ import './editor.scss'
 import { PanelBody, SelectControl, Spinner } from '@wordpress/components'
 import { useSelect } from '@wordpress/data'
 import ServerSideRender from '@wordpress/server-side-render'
-import { useEffect, useRef, useState } from '@wordpress/element'
+import { useEffect, useRef } from '@wordpress/element'
 import { list } from './shared'
 
 /**
@@ -35,7 +35,6 @@ import { list } from './shared'
  */
 export default function Edit ({ attributes, setAttributes }) {
   const {settings} = attributes
-  const [listInstance, setListInstance] = useState()
   const postTypes = useSelect((select) => {
     let options = select('core').getEntityRecords('root', 'postType')
     if (options) {
@@ -56,7 +55,6 @@ export default function Edit ({ attributes, setAttributes }) {
     if(itemRef.current){
      const listContainer = itemRef.current.querySelector('.cm-tutorial-blog-list')
       let newListInstance = list()
-      setListInstance(newListInstance)
       newListInstance.init(listContainer)
     }
   }, [settings])
