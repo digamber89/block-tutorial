@@ -25,6 +25,8 @@
 		"@wordpress/element": "^5.25.0",
 		"@wordpress/i18n": "^4.48.0",
 		"@wordpress/icons": "^9.39.0",
+		"@wordpress/server-side-render": "^4.25.0",
+		"masonry-layout": "^4.2.2",
 		"react-beautiful-dnd": "^13.1.1"
 	}
 }
