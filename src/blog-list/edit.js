@@ -57,9 +57,7 @@ export default function Edit ({ attributes, setAttributes }) {
      const listContainer = itemRef.current.querySelector('.cm-tutorial-blog-list')
       let newListInstance = list()
       setListInstance(newListInstance)
-      setTimeout(function (){
-        newListInstance.init(listContainer)
-      },3000)
+      newListInstance.init(listContainer)
     }
   }, [settings])
 
