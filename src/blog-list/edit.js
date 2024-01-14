@@ -1,38 +1,10 @@
-/**
- * Retrieves the translation of text.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-i18n/
- */
-
-/**
- * React hook that is used to mark the block wrapper element.
- * It provides all the necessary props like the class name.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
- */
 import { InspectorControls, useBlockProps } from '@wordpress/block-editor'
-
-/**
- * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
- * Those files can contain any CSS code that gets applied to the editor.
- *
- * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
- */
-import './editor.scss'
-import { PanelBody, SelectControl, Spinner } from '@wordpress/components'
+import { PanelBody, SelectControl, Spinner, __experimentalNumberControl as NumberControl } from '@wordpress/components'
 import { useSelect } from '@wordpress/data'
 import ServerSideRender from '@wordpress/server-side-render'
 import { useEffect, useRef } from '@wordpress/element'
 import { list } from './shared'
 
-/**
- * The edit function describes the structure of your block in the context of the
- * editor. This represents what the editor will render when the block is used.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-edit-save/#edit
- *
- * @return {JSX.Element} Element to render.
- */
 export default function Edit ({ attributes, setAttributes }) {
   const {settings} = attributes
   const postTypes = useSelect((select) => {
@@ -45,29 +17,68 @@ export default function Edit ({ attributes, setAttributes }) {
   }, [])
   const blockProps = useBlockProps();
   const postTypeOptions = postTypes ? postTypes.map((type) => ({ label: type.name, value: type.slug })) : []
-  const itemRef = useRef(null)
+  const itemRef = useRef(null);
 
-  const handPostTypeChange = (post_type) => {
+  const handlePostTypeChange = (post_type) => {
     setAttributes({settings: {...settings, post_type: post_type}})
   }
 
-  useEffect(() => {
-    if(itemRef.current){
-     const listContainer = itemRef.current.querySelector('.cm-tutorial-blog-list')
-      let newListInstance = list()
-      newListInstance.init(listContainer)
-    }
-  }, [settings])
+  const handlePostsPerPageChange = (posts_per_page) => {
+    setAttributes({settings: {...settings, posts_per_page: posts_per_page}})
+  }
+
+  const TriggerWhenLoadingFinished = ({attributes}) => {
+    return ( {children, showLoader} ) => {
+      useEffect( () => {
+        // Call action when the loading component unmounts because loading is finished.
+        return () => {
+          if (itemRef.current){
+            const listContainer = itemRef.current.querySelector('.cm-tutorial-blog-list')
+            let newListInstance = list()
+            newListInstance.init(listContainer)
+          }
+        };
+      }, [itemRef, attributes]);
+
+      return (
+        <div style={{position: 'relative'}}>
+          {showLoader && (
+            <div
+              style={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                marginTop: '-9px',
+                marginLeft: '-9px',
+              }}
+            >
+              <Spinner />
+            </div>
+          )}
+          <div style={{opacity: showLoader ? '0.3' : 1}}>
+            {children}
+          </div>
+        </div>
+      );
+    };
+  };
 
   return (
-    <div {...blockProps} >
+    <div {...blockProps}>
       <InspectorControls>
         <PanelBody title={'Settings'}>
           {postTypeOptions === [] && <Spinner/>}
           <SelectControl
             options={postTypeOptions}
             value={settings.post_type}
-            onChange={handPostTypeChange}
+            onChange={handlePostTypeChange}
+          />
+          <NumberControl
+            isShiftStepEnabled={ true }
+            min={1}
+            onChange={ handlePostsPerPageChange }
+            shiftStep={ 1 }
+            value={ settings.posts_per_page }
           />
         </PanelBody>
       </InspectorControls>
@@ -75,6 +86,7 @@ export default function Edit ({ attributes, setAttributes }) {
         <ServerSideRender
           block="tutorial/blog-list"
           attributes={attributes}
+          LoadingResponsePlaceholder={TriggerWhenLoadingFinished({ attributes })}
         />
       </div>
     </div>

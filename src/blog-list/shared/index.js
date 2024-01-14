@@ -10,7 +10,7 @@ export function list () {
     masonryInstance = new Masonry(DOM.container, {
       itemSelector: '.cm-tutorial-blog-list__item',
       columnWidth: 200,
-      gutter: 10,
+      gutter: 20,
     })
     masonryInstance.layout()
   }
@@ -20,7 +20,6 @@ export function list () {
   }
 
   function init (el) {
-    console.log(el)
     if (el === null) return
     cacheDOM(el)
     initMasonry()
