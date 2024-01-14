@@ -1,0 +1,20 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "tutorial/blog-list",
+	"version": "0.1.0",
+	"title": "Blog List",
+	"category": "widgets",
+	"icon": "list-view",
+	"description": "Choose What Posts to Show",
+	"example": {},
+	"supports": {
+		"html": false
+	},
+	"textdomain": "blog-list",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"render": "file:./render.php",
+	"viewScript": "file:./view.js"
+}

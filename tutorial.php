@@ -13,9 +13,7 @@
  * @package           create-block
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly.
-}
+defined('ABSPATH') || exit;
 
 /**
  * Registers the block using the metadata loaded from the `block.json` file.
@@ -24,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @see https://developer.wordpress.org/reference/functions/register_block_type/
  */
-function tutorial_tutorial_block_init() {
-	register_block_type( __DIR__ . '/build' );
+function tutorial_block_init() {
+	register_block_type( __DIR__ . '/build/tutorial' );
 }
-add_action( 'init', 'tutorial_tutorial_block_init' );
+add_action( 'init', 'tutorial_block_init' );
