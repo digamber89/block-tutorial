@@ -69,6 +69,7 @@ export default function Edit ({ attributes, setAttributes }) {
         <PanelBody title={'Settings'}>
           {postTypeOptions === [] && <Spinner/>}
           <SelectControl
+            label={"Select Post Type"}
             options={postTypeOptions}
             value={settings.post_type}
             onChange={handlePostTypeChange}
@@ -79,6 +80,7 @@ export default function Edit ({ attributes, setAttributes }) {
             onChange={ handlePostsPerPageChange }
             shiftStep={ 1 }
             value={ settings.posts_per_page }
+            label={"Posts per Page"}
           />
         </PanelBody>
       </InspectorControls>
