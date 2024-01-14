@@ -1,0 +1,56 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "academy/tutorial",
+	"version": "0.1.0",
+	"title": "Tutorial",
+	"category": "widgets",
+	"icon": "smiley",
+	"description": "Example block scaffolded with Create Block tool.",
+	"example": {},
+	"supports": {
+		"html": false
+	},
+	"attributes": {
+		"introTextStyle" : {
+			"type": "object",
+			"default": {
+				"color": "#000000"
+			}
+		},
+		"date": {
+			"type": "string",
+			"selector": ".cm-tutorial__date",
+			"source": "attribute",
+			"attribute": "data-date"
+		},
+		"images": {
+			"type": "array",
+			"source": "query",
+			"selector": ".cm-tutorial__image",
+			"query": {
+				"url": {
+					"type": "string",
+					"source": "attribute",
+					"attribute": "src"
+				},
+				"alt": {
+					"type": "string",
+					"source": "attribute",
+					"attribute": "alt"
+				}
+			},
+			"default": [
+				{
+					"url": "https://fastly.picsum.photos/id/0/5000/3333.jpg?hmac=_j6ghY5fCfSD6tvtcV74zXivkJSPIfR9B8w34XeQmvU",
+					"alt" : "some image"
+				}
+			]
+		}
+	},
+	"textdomain": "tutorial",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"viewScript": "file:./view.js"
+}

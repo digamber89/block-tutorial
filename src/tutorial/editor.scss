@@ -1,0 +1,37 @@
+@import "./scss/images";
+
+.cm-tutorial{
+  &.is-selected{
+    padding: 20px;
+  }
+}
+.cm-tutorial__editor {
+  &-image {
+    display: flex;
+    padding: 1em;
+    border: 1px solid #ccc;
+    gap: 1em;
+  }
+
+  &__images-actions {
+    display: flex;
+    gap: 1em;
+  }
+}
+
+//images editor
+.cm-tutorial__images-editor {
+  overflow: auto;
+  max-width: 650px;
+  margin-left: 20px;
+}
+
+.cm-tutorial__images-actions {
+  display: flex;
+  padding-top: 10px;
+  justify-content: space-between;
+}
+
+.cm-tutorial__editor-image-preview {
+	width: 100px;
+}

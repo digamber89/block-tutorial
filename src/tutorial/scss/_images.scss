@@ -1,0 +1,10 @@
+.cm-tutorial{
+  &__images{
+    display: flex;
+    gap: 1em;
+  }
+
+  &__image{
+    width: 200px;
+  }
+}
