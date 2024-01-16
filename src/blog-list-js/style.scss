@@ -1,8 +1,5 @@
 .cm-tutorial-masonry {
-  padding: 1em;
-  background: #00a0d2;
   box-sizing: border-box;
-
   * {
     box-sizing: border-box;
   }
@@ -40,5 +37,6 @@
   &__load-more {
     padding: 1em;
     border: none;
+    cursor: pointer;
   }
 }
