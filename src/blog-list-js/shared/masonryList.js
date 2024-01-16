@@ -4,6 +4,7 @@ export default function masonryList () {
   const DOM = {
     'container': null,
     'list': null,
+    'load_more_button': null
   }
 
   const Selectors = {

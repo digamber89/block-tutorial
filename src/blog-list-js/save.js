@@ -22,8 +22,9 @@ export default function save({attributes}) {
 			className: 'cm-tutorial-masonry'
 		}) }
 		>
-			<div className="cm-tutorial-masonry__items" data-settings={JSON.stringify(settings)}>
-				{JSON.stringify(settings)}
+			<div className="cm-tutorial-masonry__items" data-settings={JSON.stringify(settings)}></div>
+			<div className="cm-tutorial-masonry__pagination">
+				<button className="cm-tutorial-masonry__load-more">Load More</button>
 			</div>
 			<script type="text/x-handlebars-template">
 				<div className="cm-tutorial-masonry__item">
