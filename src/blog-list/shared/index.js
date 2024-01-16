@@ -1,5 +1,7 @@
 import Masonry from 'masonry-layout'
 import apiFetch from '@wordpress/api-fetch';
+import { addQueryArgs } from '@wordpress/url';
+
 
 export function list () {
   const DOM = {
@@ -8,25 +10,35 @@ export function list () {
   }
   let masonryInstance
   let page = 1;
+  let dataSettings = null
   function getMorePosts() {
-    let dataSettings = DOM.container.getAttribute('data-settings');
+
+    console.log(dataSettings)
     let { post_type, posts_per_page, total_pages } = JSON.parse(dataSettings);
     page++;
 
     // Add post type and posts per page parameters to the request
-    const path = `/wp/v2/posts?post_type=${post_type}&per_page=${posts_per_page}&page=${page}&_embed`;
+    const baseUrl = '/wp/v2/posts';
+    const args = {
+      post_type: post_type,
+      per_page: posts_per_page,
+      page: page,
+      _embed: true,
+      order: 'asc'
+    };
 
+    const path = addQueryArgs(baseUrl, args);
     apiFetch( { path } )
     .then(posts => {
       const postsHTML = posts.map(post => {
         // destructuring necessary post fields
-        let { title, _embedded } = post;
+        let { title, _embedded, link } = post;
         let thumbnailUrl = _embedded['wp:featuredmedia'] ? _embedded['wp:featuredmedia'][0].source_url : null;
         return `
-      <div class="cm-tutorial-blog-list__item">
+      <a class="cm-tutorial-blog-list__item" href="${link}">
         <img src="${thumbnailUrl}" alt="${title.rendered}" />
         <h2>${title.rendered}</h2>
-      </div>
+      </a>
     `;
       });
       // Converting HTML strings to Node
@@ -60,7 +72,7 @@ export function list () {
     masonryInstance = new Masonry(DOM.container, {
       itemSelector: '.cm-tutorial-blog-list__item',
       columnWidth: 200,
-      gutter: 20,
+      gutter: 2,
     })
     masonryInstance.layout()
   }
@@ -68,6 +80,7 @@ export function list () {
   function cacheDOM (el) {
     DOM.container = el
     DOM.load_more_button = DOM.container.querySelector('.cm-tutorial-blog-list__load-more-button')
+    dataSettings = DOM.container.getAttribute('data-settings');
   }
 
   function handleLoadMore(e){
@@ -80,6 +93,7 @@ export function list () {
   }
 
   function init (el) {
+    console.log(el)
     if (el === null) return
     cacheDOM(el)
     addEventListeners()
