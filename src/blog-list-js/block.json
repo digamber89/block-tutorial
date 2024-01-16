@@ -9,7 +9,14 @@
 	"description": "Will use JS instead of Render.php",
 	"example": {},
 	"supports": {
-		"html": false
+		"html": false,
+		"color":{
+			"background": true,
+			"text": true
+		},
+		"spacing": {
+			"padding": true
+		}
 	},
 	"attributes": {
 		"settings": {
