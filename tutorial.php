@@ -45,7 +45,7 @@ function cm_tutorial_get_posts() {
 	$items = new WP_Query( $args );
 	$response = [
 		'items'       => [],
-		'total_pages' => $page
+		'total_pages' => $items->max_num_pages
 	];
 
 	if ( $items->have_posts() ) {
