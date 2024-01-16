@@ -25,5 +25,6 @@ defined('ABSPATH') || exit;
 function tutorial_block_init() {
 	register_block_type( __DIR__ . '/build/tutorial' );
 	register_block_type( __DIR__ . '/build/blog-list' );
+	register_block_type( __DIR__ . '/build/blog-list-js' );
 }
 add_action( 'init', 'tutorial_block_init' );
