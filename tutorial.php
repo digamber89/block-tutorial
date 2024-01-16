@@ -69,4 +69,8 @@ add_action( 'wp_enqueue_scripts', function () {
 	wp_localize_script( 'tutorial-blog-list-js-view-script', 'cmTutorialData', [
 		'ajaxURL' => admin_url( 'admin-ajax.php' ),
 	] );
+
+	wp_localize_script( 'tutorial-blog-list-js-editor-script', 'cmTutorialData', [
+		'ajaxURL' => admin_url( 'admin-ajax.php' ),
+	] );
 } );

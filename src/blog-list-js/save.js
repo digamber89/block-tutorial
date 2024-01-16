@@ -5,6 +5,7 @@
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
 import { useBlockProps } from '@wordpress/block-editor';
+import Template from './shared/Template'
 
 /**
  * The save function defines the way in which the different attributes should
@@ -26,12 +27,7 @@ export default function save({attributes}) {
 			<div className="cm-tutorial-masonry__pagination">
 				<button className="cm-tutorial-masonry__load-more">Load More</button>
 			</div>
-			<script type="text/x-handlebars-template">
-				<div className="cm-tutorial-masonry__item">
-					<img className="cm-tutorial-masonry__item-image" src="{{item.image}}" alt="{{item.name}}" />
-					<h2 className="cm-tutorial-masonry__item-title">{'{{item.name}}'}</h2>
-				</div>
-			</script>
+			<Template/>
 		</div>
 	);
 }

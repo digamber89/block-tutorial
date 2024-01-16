@@ -4,6 +4,8 @@ import masonryList from './shared/masonryList'
   const items = document.querySelectorAll('.cm-tutorial-masonry')
   items.forEach((item) => {
     let masonryInstance = new masonryList()
-    masonryInstance.init(item)
+    const { cmTutorialData } = window
+    console.log(cmTutorialData)
+    masonryInstance.init(item, cmTutorialData.ajaxURL)
   })
 })()

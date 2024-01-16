@@ -15,6 +15,8 @@ export default function masonryList () {
 
   }
 
+  let ajaxURL = null
+
   let current_page = 1
   let total_pages = 0
 
@@ -41,9 +43,7 @@ export default function masonryList () {
   }
 
   function get_posts () {
-    const { cmTutorialData } = window
-    if (cmTutorialData === undefined) { console.warn('The URL is not specified. SAD')}
-    const { ajaxURL } = cmTutorialData !== undefined ? cmTutorialData : { ajaxURL: '' }
+    if (ajaxURL === undefined) { console.warn('The URL is not specified. SAD')}
     let params = new URLSearchParams()
     for (let key in settings) {
       params.append(key, settings[key])
@@ -67,17 +67,21 @@ export default function masonryList () {
     })
   }
 
+  function reLayout(){
+    msnry.layout()
+  }
+
   function renderList (items) {
     // Converting HTML strings to Node
-    const parser = new DOMParser();
+    const parser = new DOMParser()
     // Appending DOM nodes to the container and Masonry instance
     if (typeof items === 'object') {
       items.map((item) => {
         const htmlString = renderHTML(item)
-        const node = parser.parseFromString(htmlString, 'text/html').body.firstChild;
-        DOM.list.appendChild(node);
-        msnry.appended(node);
-        setTimeout(()=>{
+        const node = parser.parseFromString(htmlString, 'text/html').body.firstChild
+        DOM.list.appendChild(node)
+        msnry.appended(node)
+        setTimeout(() => {
           msnry.layout()
         }, 300)
       })
@@ -94,7 +98,8 @@ export default function masonryList () {
     DOM.load_more_button.addEventListener('click', handle_load_more)
   }
 
-  function cacheDOM (el) {
+  function cacheDOM (el, fetchURl) {
+    ajaxURL = fetchURl
     DOM.container = el
     DOM.list = DOM.container.querySelector(Selectors.listSelector)
     DOM.load_more_button = DOM.container.querySelector(Selectors.load_more)
@@ -105,19 +110,19 @@ export default function masonryList () {
     settings = JSON.parse(DOM.list.getAttribute('data-settings'))
     //initial request
     get_posts(settings)
-    msnry = new Masonry( DOM.list, {
+    msnry = new Masonry(DOM.list, {
       // options
       itemSelector: Selectors.masonryItems,
       columnWidth: 200,
-      gutter: 10
-    });
+      gutter: 10,
+    })
   }
 
-  function init (el = null) {
+  function init (el = null, fetchURL = null) {
     if (el === null) return
-    cacheDOM(el)
+    cacheDOM(el, fetchURL)
     addEventListeners()
   }
 
-  return { init }
+  return { init, reLayout }
 }
